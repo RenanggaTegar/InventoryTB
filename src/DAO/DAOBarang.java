@@ -11,6 +11,8 @@ import java.util.List;
 import java.sql.*;
 import java.sql.Connection;
 import DAOInterface.IDAOBarang;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -48,10 +50,90 @@ public class DAOBarang implements IDAOBarang{
         }
         return lstBrg;
     }
+
+    @Override
+    public void insert(Barang b) {
+        PreparedStatement statement = null;
+        try
+        {
+            statement = con.prepareStatement(strInsert);
+            statement.setInt(1 , b.getID_Barang());
+            statement.setString(2 , b.getNama_Barang());
+            statement.setString(3 , b.getSatuan());
+            statement.setInt(4 , b.getHarga());
+            statement.setInt(5 , b.getStok());
+            statement.execute();
+        }catch(SQLException x)
+        {
+            System.out.println("gagal input");
+
+        }
+        finally
+        {
+            try {
+                statement.close();
+            } catch (SQLException e) {
+                System.out.println("gagal inputt");
+            }
+        }
+    }
+   
+    @Override
+    public void update(Barang b) {
+        PreparedStatement statement = null;
+        try
+        {
+            statement = con.prepareStatement(strUpdate);
+            statement.setString(1 , b.getNama_Barang());
+            statement.setString(2 , b.getSatuan());
+            statement.setInt(3 , b.getHarga());
+            statement.setInt(4 , b.getStok());
+            statement.setInt(5 , b.getID_Barang());
+            statement.executeUpdate();
+        }catch(SQLException e)
+        {
+            System.out.println("gagal update");
+
+        }
+        finally
+        {
+            try {
+                statement.close();
+            } catch (SQLException x) {
+                System.out.println("gagal updatee");
+            }
+        }
+    }
+    
+    @Override
+    public void delete(int ID_Barang) {
+        PreparedStatement statement = null;
+        try
+        {
+            statement = con.prepareStatement(strDelete);
+            statement.setInt(1 , ID_Barang);
+            statement.executeUpdate();
+        }catch(SQLException x)
+        {
+            System.out.println("gagal delete");
+
+        }
+        finally
+        {
+            try {
+                statement.close();
+            } catch (SQLException e) {
+                System.out.println("gagal deletee");
+            }
+        }
+    }
     
     Connection con;
     //SQL Query
     String strRead = "select * from barang;";
+    String strInsert = "insert into barang(ID_Barang, Nama_Barang, Satuan, Harga, Stok) values(?,?,?,?,?);";
+    String strUpdate = "update barang set Nama_Barang=?, Satuan=?, Harga=?, Stok=? where ID_Barang=?";
+    String strDelete = "delete from barang where ID_Barang=?";
     
-    
+
 }

@@ -12,7 +12,12 @@ import java.util.List;
  * @author kumil
  */
 public interface IDAOBarang {
-    
+    //read
     public List<Barang> getAll();
-    
+    //insert
+    public void insert(Barang b);
+    //update
+    public void update(Barang b);
+    //delete
+    public void delete(int ID_Barang);  
 }
