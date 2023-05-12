@@ -36,6 +36,7 @@ public class ControllerBarang {
     {
          Barang b = new Barang();
          b.setID_Barang(Integer.parseInt(frmBarang.gettxtID_Barang().getText()));
+         b.setID_Distributor(Integer.parseInt(frmBarang.gettxtID_Barang().getText()));
          b.setNama_Barang(frmBarang.gettxtNama_Barang().getText());
          b.setSatuan(frmBarang.gettxtSatuan().getText());
          b.setHarga(Integer.parseInt(frmBarang.gettxtHarga().getText()));
@@ -52,6 +53,7 @@ public class ControllerBarang {
     {
         if(!frmBarang.gettxtID_Barang().isEnabled())
             frmBarang.gettxtID_Barang().setEnabled(true);
+        frmBarang.gettxtID_Distributor().setText("");
         frmBarang.gettxtID_Barang().setText("");
         frmBarang.gettxtNama_Barang().setText("");
         frmBarang.gettxtSatuan().setText("");
@@ -63,6 +65,7 @@ public class ControllerBarang {
     {
         frmBarang.gettxtID_Barang().setEnabled(false);
         frmBarang.gettxtID_Barang().setText(lstBrg.get(row).getID_Barang().toString());
+        frmBarang.gettxtID_Distributor().setText(lstBrg.get(row).getID_Distributor().toString());
         frmBarang.gettxtNama_Barang().setText(lstBrg.get(row).getNama_Barang());
         frmBarang.gettxtSatuan().setText(lstBrg.get(row).getSatuan());
         frmBarang.gettxtHarga().setText(lstBrg.get(row).getHarga().toString());
@@ -77,6 +80,7 @@ public class ControllerBarang {
          b.setHarga(Integer.parseInt(frmBarang.gettxtHarga().getText()));
          b.setStok(Integer.parseInt(frmBarang.gettxtStok().getText()));
          b.setID_Barang(Integer.parseInt(frmBarang.gettxtID_Barang().getText()));
+         b.setID_Distributor(Integer.parseInt(frmBarang.gettxtID_Distributor().getText()));
          iBarang.update(b);
          JOptionPane.showMessageDialog(null, "Update berhasil");
     }
