@@ -4,6 +4,7 @@
  */
 package Controller;
 
+//tegar
 import DAO.DAOBarang;
 import Model.Barang;
 import Model.TabelModelBarang;
@@ -39,8 +40,12 @@ public class ControllerBarang {
          b.setSatuan(frmBarang.gettxtSatuan().getText());
          b.setHarga(Integer.parseInt(frmBarang.gettxtHarga().getText()));
          b.setStok(Integer.parseInt(frmBarang.gettxtStok().getText()));
-         iBarang.insert(b);
-         JOptionPane.showMessageDialog(null, "Input berhasil");
+         boolean res = iBarang.insert(b);
+         if(res)
+             JOptionPane.showMessageDialog(null, "Input berhasil");
+         else
+             JOptionPane.showMessageDialog(null, "Gagal/Data Duplikat");
+
     }
     
     public void reset()
@@ -78,10 +83,17 @@ public class ControllerBarang {
     
     public void delete()
     {
-         Barang b = new Barang();
          iBarang.delete(Integer.parseInt(frmBarang.gettxtID_Barang().getText()));
          JOptionPane.showMessageDialog(null, "Delete berhasil");
     }
+    
+    public void search()
+    {
+        lstBrg = iBarang.getAllByName(frmBarang.gettxtCariNama().getText());
+        TabelModelBarang tabelBrg = new TabelModelBarang(lstBrg);
+        frmBarang.getTabelData().setModel(tabelBrg);
+    }
+    
     FormBarang frmBarang;
     IDAOBarang iBarang;
     List<Barang> lstBrg;

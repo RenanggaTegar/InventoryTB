@@ -15,9 +15,11 @@ public interface IDAOBarang {
     //read
     public List<Barang> getAll();
     //insert
-    public void insert(Barang b);
+    public boolean insert(Barang b);
     //update
     public void update(Barang b);
     //delete
-    public void delete(int ID_Barang);  
+    public void delete(int ID_Barang); 
+    //search
+    public List<Barang> getAllByName(String Nama_Barang);
 }

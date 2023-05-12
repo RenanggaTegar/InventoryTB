@@ -5,6 +5,7 @@
 package InventoryTB;
 
 import Helper.KoneksiDB;
+import View.FormLogin;
 
 /**
  *
@@ -18,6 +19,8 @@ public class InventoryTB {
     public static void main(String[] args) {
         // TODO code application logic here
         KoneksiDB.getConnection();
+        FormLogin FB = new FormLogin();
+        FB.setVisible(true);
     }
     
 }
