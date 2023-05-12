@@ -11,8 +11,6 @@ import java.util.List;
 import java.sql.*;
 import java.sql.Connection;
 import DAOInterface.IDAOBarang;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -52,7 +50,8 @@ public class DAOBarang implements IDAOBarang{
     }
 
     @Override
-    public void insert(Barang b) {
+    public boolean insert(Barang b) {
+        boolean result = true;
         PreparedStatement statement = null;
         try
         {
@@ -63,10 +62,11 @@ public class DAOBarang implements IDAOBarang{
             statement.setInt(4 , b.getHarga());
             statement.setInt(5 , b.getStok());
             statement.execute();
+            
         }catch(SQLException x)
         {
             System.out.println("gagal input");
-
+            result = false;
         }
         finally
         {
@@ -74,8 +74,10 @@ public class DAOBarang implements IDAOBarang{
                 statement.close();
             } catch (SQLException e) {
                 System.out.println("gagal inputt");
+                result = false;
             }
         }
+        return result;
     }
    
     @Override
@@ -128,12 +130,39 @@ public class DAOBarang implements IDAOBarang{
         }
     }
     
+    @Override
+    public List<Barang> getAllByName(String Nama_Barang) {
+        List<Barang> lstBrg = null;
+        try
+        {
+            lstBrg = new ArrayList<Barang>();
+            PreparedStatement st = con.prepareStatement(strSearch);
+            st.setString(1 , "%"+Nama_Barang+"%");
+            ResultSet rs = st.executeQuery() ;
+            while(rs.next())
+            {
+                Barang brg = new Barang();
+                brg.setID_Barang(rs.getInt("ID_Barang"));
+                brg.setNama_Barang(rs.getString("Nama_Barang"));
+                brg.setSatuan(rs.getString("Satuan"));
+                brg.setHarga(rs.getInt("Harga"));
+                brg.setStok(rs.getInt("Stok"));
+                lstBrg.add(brg);
+            }
+        }
+        catch(SQLException e)
+        {
+            System.err.println("Error");
+        }
+        return lstBrg;
+    }
+    
     Connection con;
     //SQL Query
-    String strRead = "select * from barang;";
+    String strRead = "select * from barang order by ID_Barang asc;";
     String strInsert = "insert into barang(ID_Barang, Nama_Barang, Satuan, Harga, Stok) values(?,?,?,?,?);";
     String strUpdate = "update barang set Nama_Barang=?, Satuan=?, Harga=?, Stok=? where ID_Barang=?";
     String strDelete = "delete from barang where ID_Barang=?";
-    
+    String strSearch = "select * from barang where Nama_Barang like ?;";
 
 }
