@@ -35,6 +35,7 @@ public class DAOBarang implements IDAOBarang{
             {
                 Barang brg = new Barang();
                 brg.setID_Barang(rs.getInt("ID_Barang"));
+                brg.setID_Distributor(rs.getInt("ID_Distributor"));
                 brg.setNama_Barang(rs.getString("Nama_Barang"));
                 brg.setSatuan(rs.getString("Satuan"));
                 brg.setHarga(rs.getInt("Harga"));
@@ -57,10 +58,11 @@ public class DAOBarang implements IDAOBarang{
         {
             statement = con.prepareStatement(strInsert);
             statement.setInt(1 , b.getID_Barang());
-            statement.setString(2 , b.getNama_Barang());
-            statement.setString(3 , b.getSatuan());
-            statement.setInt(4 , b.getHarga());
-            statement.setInt(5 , b.getStok());
+            statement.setInt(2, b.getID_Distributor);
+            statement.setString(3 , b.getNama_Barang());
+            statement.setString(4 , b.getSatuan());
+            statement.setInt(5 , b.getHarga());
+            statement.setInt(6 , b.getStok());
             statement.execute();
             
         }catch(SQLException x)
@@ -91,6 +93,7 @@ public class DAOBarang implements IDAOBarang{
             statement.setInt(3 , b.getHarga());
             statement.setInt(4 , b.getStok());
             statement.setInt(5 , b.getID_Barang());
+            statement.setInt( 6, b.getID_Distributor());
             statement.executeUpdate();
         }catch(SQLException e)
         {
@@ -143,6 +146,7 @@ public class DAOBarang implements IDAOBarang{
             {
                 Barang brg = new Barang();
                 brg.setID_Barang(rs.getInt("ID_Barang"));
+                brg.setID_Distributor(rs.getInt("ID_Distributor"));
                 brg.setNama_Barang(rs.getString("Nama_Barang"));
                 brg.setSatuan(rs.getString("Satuan"));
                 brg.setHarga(rs.getInt("Harga"));
@@ -160,8 +164,8 @@ public class DAOBarang implements IDAOBarang{
     Connection con;
     //SQL Query
     String strRead = "select * from barang order by ID_Barang asc;";
-    String strInsert = "insert into barang(ID_Barang, Nama_Barang, Satuan, Harga, Stok) values(?,?,?,?,?);";
-    String strUpdate = "update barang set Nama_Barang=?, Satuan=?, Harga=?, Stok=? where ID_Barang=?";
+    String strInsert = "insert into barang(ID_Barang, ,ID_Distributor, Nama_Barang, Satuan, Harga, Stok) values(?,?,?,?,?,?);";
+    String strUpdate = "update barang set Nama_Barang=?, Satuan=?, Harga=?, Stok=? where ID_Barang=?, ID_Distributor=?";
     String strDelete = "delete from barang where ID_Barang=?";
     String strSearch = "select * from barang where Nama_Barang like ?;";
 
